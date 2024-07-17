@@ -9,13 +9,9 @@ using UnityEngine;
 /// Handling movement inside this component's OnNetworkSpawn method only ensures the mitigation of race condition issues
 /// arising due to the execution order of other NetworkBehaviours' OnNetworkSpawn methods.
 /// </remarks>
-[RequireComponent(typeof(ServerPlayerMove))]
 [DisallowMultipleComponent]
 public class ClientDrivenNetworkTransform : NetworkTransform
 {
-    [SerializeField]
-    ServerPlayerMove m_ServerPlayerMove;
-    
     protected override bool OnIsServerAuthoritative()
     {
         return false;
@@ -27,23 +23,18 @@ public class ClientDrivenNetworkTransform : NetworkTransform
 
         if (IsClient && IsOwner)
         {
-            SetPosition(Vector3.zero, m_ServerPlayerMove.spawnPosition.Value);
-            m_ServerPlayerMove.spawnPosition.OnValueChanged += SetPosition;
+            // TODO: add spawn points
+            SetPosition(Vector3.zero);
         }
     }
 
     public override void OnNetworkDespawn()
     {
         base.OnNetworkDespawn();
-
-        if (m_ServerPlayerMove != null)
-        {
-            m_ServerPlayerMove.spawnPosition.OnValueChanged -= SetPosition;
-        }
     }
 
-    void SetPosition(Vector3 previousValue, Vector3 newValue)
+    void SetPosition(Vector3 newValue)
     {
-        transform.position = newValue;
+        Teleport(newValue, Quaternion.identity, Vector3.one);
     }
 }

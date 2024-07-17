@@ -8,13 +8,8 @@ using UnityEngine.InputSystem;
 /// <summary>
 /// Assumes client authority
 /// </summary>
-[RequireComponent(typeof(ServerPlayerMove))]
-[DefaultExecutionOrder(1)] // after server component
 public class ClientPlayerMove : NetworkBehaviour
 {
-    [SerializeField]
-    ServerPlayerMove m_ServerPlayerMove;
-
     [SerializeField]
     CharacterController m_CharacterController;
 
@@ -71,37 +66,5 @@ public class ClientPlayerMove : NetworkBehaviour
 
         var cinemachineVirtualCamera = FindObjectOfType<CinemachineVirtualCamera>();
         cinemachineVirtualCamera.Follow = m_CameraFollow;
-    }
-
-    void OnPickUp()
-    {
-        /*if (m_ServerPlayerMove.isObjectPickedUp.Value)
-        {
-            m_ServerPlayerMove.ServerDropObjectRpc();
-        }
-        else
-        {
-            // detect nearby ingredients
-            var hits = Physics.BoxCastNonAlloc(transform.position,
-                Vector3.one,
-                transform.forward,
-                m_HitColliders,
-                Quaternion.identity,
-                1f,
-                LayerMask.GetMask(new[] { "PickupItems" }),
-                QueryTriggerInteraction.Ignore);
-            if (hits > 0)
-            {
-                var ingredient = m_HitColliders[0].collider.gameObject.GetComponent<ServerIngredient>();
-                if (ingredient != null)
-                {
-                    var netObj = ingredient.NetworkObjectId;
-                    // Netcode is a server driven SDK. Shared objects like ingredients need to be interacted with using ServerRPCs. Therefore, there
-                    // will be a delay between the button press and the reparenting.
-                    // This delay could be hidden with some animations/sounds/VFX that would be triggered here.
-                    m_ServerPlayerMove.ServerPickupObjectRpc(netObj);
-                }
-            }
-        }*/
     }
 }

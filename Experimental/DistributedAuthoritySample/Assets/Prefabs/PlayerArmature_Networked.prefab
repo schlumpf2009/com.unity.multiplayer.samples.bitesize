@@ -171,9 +171,6 @@ PrefabInstance:
       addedObject: {fileID: -3062321976565574425}
     - targetCorrespondingSourceObject: {fileID: 4416926081852918481, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -2755784201116707001}
-    - targetCorrespondingSourceObject: {fileID: 4416926081852918481, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 5667156634780145037}
     - targetCorrespondingSourceObject: {fileID: 4416926081852918481, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
       insertIndex: -1
@@ -230,7 +227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 4217728462
+  GlobalObjectIdHash: 3868643671
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 0
@@ -241,23 +238,6 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
---- !u!114 &-2755784201116707001
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1116025501350672692}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c521a646e08a84279a7bcf9c775080a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isObjectPickedUp:
-    m_InternalValue: 0
-  m_LocalHeldPosition: {x: 0, y: 2.85, z: 0}
-  spawnPosition:
-    m_InternalValue: {x: 0, y: 0, z: 0}
 --- !u!114 &5667156634780145037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -270,7 +250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 147847c03d82a4e809c6ab71e2b3ce97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ServerPlayerMove: {fileID: -2755784201116707001}
+  m_ServerPlayerMove: {fileID: 0}
   m_CharacterController: {fileID: 1116025501350672702}
   m_ThirdPersonController: {fileID: 1116025501350672703}
   m_CapsuleCollider: {fileID: 1021551417513153853}
@@ -302,7 +282,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53b28d1b2108d4d199dae3ac8f537c27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AuthorityMode: 0
+  AuthorityMode: 1
   UseUnreliableDeltas: 0
   SyncPositionX: 1
   SyncPositionY: 1
@@ -322,7 +302,7 @@ MonoBehaviour:
   InLocalSpace: 0
   Interpolate: 1
   SlerpPosition: 0
-  m_ServerPlayerMove: {fileID: -2755784201116707001}
+  m_ServerPlayerMove: {fileID: 0}
 --- !u!114 &1116025501350672696 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4416926081852918493, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
