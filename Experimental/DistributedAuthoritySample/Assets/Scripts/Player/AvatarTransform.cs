@@ -1,3 +1,4 @@
+using Unity.Netcode.Components;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -94,9 +95,20 @@ public class AvatarTransform : BaseObjectMotionHandler
 
     // cached grounded check
     bool m_IsGrounded;
+    int m_GroundMask;
 
+    [SerializeField]
     RaycastHit[] m_RaycastHits = new RaycastHit[1];
     Ray m_Ray;
+
+    OwnerNetworkAnimator m_NetworkAnimator;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        m_GroundMask = LayerMask.GetMask(new[] { "Ground" });
+        m_NetworkAnimator = GetComponent<OwnerNetworkAnimator>();
+    }
 
     public override void OnNetworkSpawn()
     {
@@ -137,11 +149,16 @@ public class AvatarTransform : BaseObjectMotionHandler
             transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * RotationSpeed);
         }
 
-        if (AvatarInputs.jump && IsGrounded())
+        if (IsGrounded() && AvatarInputs.jump)
         {
             m_Jump = true;
             AvatarInputs.jump = false;
+            m_NetworkAnimator.SetTrigger("Jump");
         }
+
+        // animation TODO:
+        m_NetworkAnimator.Animator.SetFloat("Move", m_Movement.magnitude * (AvatarInputs.sprint ? 1.2f : 1f));
+        m_NetworkAnimator.Animator.SetBool("Grounded", m_IsGrounded);
     }
 
     void ApplyMovement()
@@ -187,9 +204,10 @@ public class AvatarTransform : BaseObjectMotionHandler
     bool IsGrounded()
     {
         // Perform a raycast to check if the character is grounded
-        m_Ray.origin = transform.position;
+        m_Ray.origin = Rigidbody.worldCenterOfMass;
         m_Ray.direction = Vector3.down;
-        return Physics.RaycastNonAlloc(m_Ray, m_RaycastHits, GroundCheckDistance) > 0;
+        var hits = Physics.RaycastNonAlloc(m_Ray, m_RaycastHits, GroundCheckDistance, m_GroundMask);
+        return hits > 0;
     }
 
     void FixedUpdate()
