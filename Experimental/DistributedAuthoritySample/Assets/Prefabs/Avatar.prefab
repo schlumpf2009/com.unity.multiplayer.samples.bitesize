@@ -302,7 +302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2473698027
+  GlobalObjectIdHash: 3001504883
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 0
@@ -463,3 +463,5 @@ MonoBehaviour:
   m_NetworkRigidbody: {fileID: -8100831418301897270}
   m_HoldTransform: {fileID: 3349241818086449349}
   m_InteractCollider: {fileID: 8960153770299512184}
+  m_MinTossForce: 5
+  m_MaxTossForce: 10
