@@ -1,4 +1,4 @@
-using com.unity.multiplayer.samples.distributed_authority.gameplay;
+using com.unity.multiplayer.samples.socialhub.player;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;

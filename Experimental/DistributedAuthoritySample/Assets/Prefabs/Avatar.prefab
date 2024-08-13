@@ -302,7 +302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3001504883
+  GlobalObjectIdHash: 2473698027
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 0
@@ -436,11 +436,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5478015027486214707}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7e9f71718dd134b14b300e378e98c718, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_InteractActionReference: {fileID: 1781555164194001046, guid: dcd1b4eb76b964f40afe6c0a3ca65c82, type: 3}
   move: {x: 0, y: 0}
   look: {x: 0, y: 0}
   jump: 0
@@ -460,6 +461,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0d7ef74102874e9d95e6c633d1d3936, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_MainCollider: {fileID: 817796967242824188}
+  m_AvatarInputs: {fileID: 8197190117666738524}
   m_NetworkRigidbody: {fileID: -8100831418301897270}
   m_HoldTransform: {fileID: 3349241818086449349}
   m_InteractCollider: {fileID: 8960153770299512184}
