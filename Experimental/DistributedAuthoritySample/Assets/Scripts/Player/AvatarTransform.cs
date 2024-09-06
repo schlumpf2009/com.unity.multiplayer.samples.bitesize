@@ -4,6 +4,7 @@ using Unity.Multiplayer.Samples.SocialHub.Input;
 using Unity.Multiplayer.Samples.SocialHub.Physics;
 using Unity.Netcode;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 namespace Unity.Multiplayer.Samples.SocialHub.Player
 {
@@ -20,6 +21,12 @@ namespace Unity.Multiplayer.Samples.SocialHub.Player
         PhysicsPlayerController m_PhysicsPlayerController;
 
         Camera m_MainCamera;
+
+        protected override void OnNetworkPreSpawn(ref NetworkManager networkManager)
+        {
+
+            base.OnNetworkPreSpawn(ref networkManager);
+        }
 
         public override void OnNetworkSpawn()
         {
@@ -40,8 +47,10 @@ namespace Unity.Multiplayer.Samples.SocialHub.Player
             Rigidbody.isKinematic = false;
             Rigidbody.freezeRotation = true;
             // TODO: MTT-8899 fetch spawn point
-            var spawnPosition = new Vector3(51.4228516f,8.88483906f,-11.031064f);
-            Teleport(spawnPosition, Quaternion.identity, Vector3.one);
+            var spawnPosition = new Vector3(53.7428741f,7.85612297f,-8.75020027f);
+            transform.SetPositionAndRotation(spawnPosition, Quaternion.identity);
+            //Teleport(spawnPosition, Quaternion.identity, Vector3.one);
+            Rigidbody.position = spawnPosition;
             Rigidbody.linearVelocity = Vector3.zero;
 
             this.RegisterNetworkUpdate(updateStage: NetworkUpdateStage.Update);
@@ -106,6 +115,12 @@ namespace Unity.Multiplayer.Samples.SocialHub.Player
             {
                 case NetworkUpdateStage.Update:
                     OnTransformUpdate();
+
+                    if (UnityEngine.Input.GetKeyDown(KeyCode.Space))
+                    {
+                        NetworkManager.Shutdown();
+                        SceneManager.LoadScene("MainMenu");
+                    }
                     break;
                 case NetworkUpdateStage.FixedUpdate:
                     m_PhysicsPlayerController.OnFixedUpdate();

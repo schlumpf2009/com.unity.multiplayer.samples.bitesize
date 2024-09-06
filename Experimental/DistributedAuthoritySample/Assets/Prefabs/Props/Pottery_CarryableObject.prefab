@@ -143,6 +143,18 @@ PrefabInstance:
       propertyPath: m_Center.z
       value: -0.00050622225
       objectReference: {fileID: 0}
+    - target: {fileID: 1070061854055180021, guid: b35b44635b9b3ec43b189ea3a1400750, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1070061854055180021, guid: b35b44635b9b3ec43b189ea3a1400750, type: 3}
+      propertyPath: m_ProvidesContacts
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2093548513578380327, guid: b35b44635b9b3ec43b189ea3a1400750, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 1926722854
+      objectReference: {fileID: 0}
     - target: {fileID: 5622352566631732085, guid: b35b44635b9b3ec43b189ea3a1400750, type: 3}
       propertyPath: m_Name
       value: Pottery_CarryableObject
@@ -230,6 +242,14 @@ PrefabInstance:
     - target: {fileID: 6968734486713430189, guid: b35b44635b9b3ec43b189ea3a1400750, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -48.802002
+      objectReference: {fileID: 0}
+    - target: {fileID: 8778270557094879703, guid: b35b44635b9b3ec43b189ea3a1400750, type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8778270557094879703, guid: b35b44635b9b3ec43b189ea3a1400750, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

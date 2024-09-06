@@ -66,7 +66,7 @@ namespace Unity.Multiplayer.Samples.SocialHub.Player
 
             m_InteractCollider.enabled = HasAuthority;
 
-            this.RegisterNetworkUpdate(updateStage: NetworkUpdateStage.PreLateUpdate);
+            this.RegisterNetworkUpdate(updateStage: NetworkUpdateStage.PostLateUpdate);
 
             if (!HasAuthority)
             {
@@ -384,7 +384,7 @@ namespace Unity.Multiplayer.Samples.SocialHub.Player
         {
             switch (updateStage)
             {
-                case NetworkUpdateStage.PreLateUpdate:
+                case NetworkUpdateStage.PostLateUpdate:
                     // if this instance is carrying something, then keep connection points synchronized with object being carried
                     if (m_TransferableObject != null)
                     {

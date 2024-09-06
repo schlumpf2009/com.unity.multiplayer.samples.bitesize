@@ -132,7 +132,7 @@ namespace Unity.Multiplayer.Samples.SocialHub.Input
 
         void SetCursorState(bool newState)
         {
-            Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
+            //Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
         }
     }
 }

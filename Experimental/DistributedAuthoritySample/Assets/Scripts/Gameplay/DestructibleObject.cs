@@ -13,6 +13,9 @@ namespace Unity.Multiplayer.Samples.SocialHub.Gameplay
         [SerializeField]
         float m_IntangibleDurationAfterDamage;
 
+        [SerializeField]
+        GameObject m_DestructionFX;
+
         float m_LastDamageTime;
 
         NetworkVariable<bool> m_Initialized = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
@@ -24,6 +27,13 @@ namespace Unity.Multiplayer.Samples.SocialHub.Gameplay
             base.OnNetworkSpawn();
             InitializeDestructible();
             gameObject.name = $"[NetworkObjectId-{NetworkObjectId}]{name}";
+        }
+
+        public override void OnDeferringDespawn(int tick)
+        {
+            base.OnDeferringDespawn(tick);
+
+            // pool?
         }
 
         protected override void OnContactEvent(ulong eventId, Vector3 averagedCollisionNormal, Rigidbody collidingBody, Vector3 contactPoint, bool hasCollisionStay = false, Vector3 averagedCollisionStayNormal = default)
@@ -84,7 +94,8 @@ namespace Unity.Multiplayer.Samples.SocialHub.Gameplay
                 Rigidbody.isKinematic = true;
                 EnableColliders(false);
                 m_Health.Value = currentHealth;
-                NetworkObject.Despawn();
+                SpawnVFXRpc();
+                NetworkObject.DeferDespawn(4, destroy: false);
                 // TODO: Spawn VFX locally + send VFX message
             }
             else
@@ -92,6 +103,12 @@ namespace Unity.Multiplayer.Samples.SocialHub.Gameplay
                 m_Health.Value = currentHealth;
                 m_LastDamageTime = Time.realtimeSinceStartup;
             }
+        }
+
+        [Rpc(SendTo.NotAuthority)]
+        void SpawnVFXRpc()
+        {
+            Instantiate(m_DestructionFX);
         }
 
         void InitializeDestructible()
