@@ -303,6 +303,8 @@ namespace Unity.Multiplayer.Samples.SocialHub.Player
 
             // prevent collisions from this collider to the picked up object and vice-versa
             UnityEngine.Physics.IgnoreCollision(m_MainCollider, m_TransferableObject.GetComponent<Collider>(), true);
+            UnityEngine.Physics.IgnoreCollision(m_MainCollider, m_InteractCollider, true);
+            m_InteractCollider.isTrigger = false;
 
             if (HasAuthority)
             {
@@ -332,7 +334,9 @@ namespace Unity.Multiplayer.Samples.SocialHub.Player
         void OnDropAction()
         {
             var transferableRigidbody = m_TransferableObject.GetComponent<Rigidbody>();
+            m_InteractCollider.isTrigger = false;
             UnityEngine.Physics.IgnoreCollision(m_MainCollider, m_TransferableObject.GetComponent<Collider>(), false);
+            UnityEngine.Physics.IgnoreCollision(m_MainCollider, m_InteractCollider, false);
             transferableRigidbody.useGravity = true;
             m_TransferableObject = null;
         }
@@ -362,7 +366,9 @@ namespace Unity.Multiplayer.Samples.SocialHub.Player
         void OnThrowAction()
         {
             var transferableRigidbody = m_TransferableObject.GetComponent<Rigidbody>();
+            m_InteractCollider.isTrigger = false;
             UnityEngine.Physics.IgnoreCollision(m_MainCollider, m_TransferableObject.GetComponent<Collider>(), false);
+            UnityEngine.Physics.IgnoreCollision(m_MainCollider, m_InteractCollider, false);
             transferableRigidbody.useGravity = true;
             m_TransferableObject = null;
         }

@@ -124,8 +124,14 @@ public class ServicesHelper : MonoBehaviour
         }
     }
 
+    public void Join()
+    {
+        ConnectThroughLiveService("session");
+    }
+
     void OnGUI()
     {
+        return;
         if (AuthenticationService.Instance == null || !AuthenticationService.Instance.IsSignedIn)
         {
             return;

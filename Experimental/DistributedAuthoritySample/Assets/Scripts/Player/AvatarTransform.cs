@@ -1,9 +1,11 @@
 using System;
+using Unity.Multiplayer.Samples.SocialHub.Gameplay;
 using UnityEngine;
 using Unity.Multiplayer.Samples.SocialHub.Input;
 using Unity.Multiplayer.Samples.SocialHub.Physics;
 using Unity.Netcode;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 namespace Unity.Multiplayer.Samples.SocialHub.Player
 {
@@ -39,21 +41,26 @@ namespace Unity.Multiplayer.Samples.SocialHub.Player
             m_PhysicsPlayerController.enabled = true;
             Rigidbody.isKinematic = false;
             Rigidbody.freezeRotation = true;
-            // TODO: MTT-8899 fetch spawn point
-            var spawnPosition = new Vector3(53.7428741f,7.85612297f,-8.75020027f);
-            transform.SetPositionAndRotation(spawnPosition, Quaternion.Euler(0f,143.263947f,0f));
-            //Teleport(spawnPosition, Quaternion.identity, Vector3.one);
-            Rigidbody.position = spawnPosition;
+            var spawnPoint = PlayerSpawnPoints.Instance.GetRandomSpawnPoint((int)OwnerClientId - 1);
+            //new Vector3(53.7428741f,7.85612297f,-8.75020027f);
+            //Quaternion.Euler(0f,143.263947f,0f)
+            transform.SetPositionAndRotation(spawnPoint.position, spawnPoint.rotation);
+            Teleport(spawnPoint.position, spawnPoint.rotation, Vector3.one);
+            Rigidbody.position = spawnPoint.position;
             Rigidbody.linearVelocity = Vector3.zero;
 
             this.RegisterNetworkUpdate(updateStage: NetworkUpdateStage.Update);
             this.RegisterNetworkUpdate(updateStage: NetworkUpdateStage.FixedUpdate);
 
-            var cameraControl = Camera.main?.GetComponent<CameraControl>();
+            var otherCamera = GameObject.FindWithTag("SpawnLocation").GetComponent<Camera>();
+            otherCamera.enabled = false;
+
+            m_MainCamera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
+            var cameraControl = m_MainCamera.GetComponent<CameraControl>();
             if (cameraControl != null)
             {
                 cameraControl.SetTransform(transform);
-                m_MainCamera = Camera.main;
+                m_MainCamera.enabled = true;
             }
             else
             {
@@ -108,6 +115,12 @@ namespace Unity.Multiplayer.Samples.SocialHub.Player
             {
                 case NetworkUpdateStage.Update:
                     OnTransformUpdate();
+
+                    if (UnityEngine.Input.GetKeyDown(KeyCode.Space))
+                    {
+                        NetworkManager.Shutdown();
+                        SceneManager.LoadScene("MainMenu");
+                    }
                     break;
                 case NetworkUpdateStage.FixedUpdate:
                     m_PhysicsPlayerController.OnFixedUpdate();
