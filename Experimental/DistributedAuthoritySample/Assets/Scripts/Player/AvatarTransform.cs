@@ -116,7 +116,7 @@ namespace Unity.Multiplayer.Samples.SocialHub.Player
                 case NetworkUpdateStage.Update:
                     OnTransformUpdate();
 
-                    if (UnityEngine.Input.GetKeyDown(KeyCode.Space))
+                    if (UnityEngine.Input.GetKeyDown(KeyCode.Escape))
                     {
                         NetworkManager.Shutdown();
                         SceneManager.LoadScene("MainMenu");

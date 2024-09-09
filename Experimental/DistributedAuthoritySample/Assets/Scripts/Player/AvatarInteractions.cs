@@ -301,9 +301,10 @@ namespace Unity.Multiplayer.Samples.SocialHub.Player
             transferableObjectTransform.position = m_PickupLocChild.transform.position;
             transferableObjectTransform.rotation = m_PickupLocChild.transform.rotation;
 
+            var otherCollider = m_TransferableObject.GetComponent<Collider>();
             // prevent collisions from this collider to the picked up object and vice-versa
-            UnityEngine.Physics.IgnoreCollision(m_MainCollider, m_TransferableObject.GetComponent<Collider>(), true);
-            UnityEngine.Physics.IgnoreCollision(m_MainCollider, m_InteractCollider, true);
+            UnityEngine.Physics.IgnoreCollision(m_MainCollider, otherCollider, true);
+            UnityEngine.Physics.IgnoreCollision(otherCollider, m_InteractCollider, true);
             m_InteractCollider.isTrigger = false;
 
             if (HasAuthority)
@@ -325,6 +326,11 @@ namespace Unity.Multiplayer.Samples.SocialHub.Player
             m_AvatarNetworkAnimator.SetTrigger(k_DropId);
             m_PickupLocFixedJoint.connectedBody = null;
             m_CurrentTransferableObject.Value = new NetworkBehaviourReference();
+            m_InteractCollider.isTrigger = true;
+
+            var otherCollider = m_TransferableObject.GetComponent<Collider>();
+            UnityEngine.Physics.IgnoreCollision(m_MainCollider, m_TransferableObject.GetComponent<Collider>(), false);
+            UnityEngine.Physics.IgnoreCollision(otherCollider, m_InteractCollider, false);
             // set ownership status to request required, now that this object is being held
             m_TransferableObject.NetworkObject.SetOwnershipStatus(NetworkObject.OwnershipStatus.Distributable, clearAndSet: true);
             m_TransferableObject.NetworkObject.SetOwnershipStatus(NetworkObject.OwnershipStatus.Transferable);
@@ -334,9 +340,9 @@ namespace Unity.Multiplayer.Samples.SocialHub.Player
         void OnDropAction()
         {
             var transferableRigidbody = m_TransferableObject.GetComponent<Rigidbody>();
-            m_InteractCollider.isTrigger = false;
+            var otherCollider = m_TransferableObject.GetComponent<Collider>();
             UnityEngine.Physics.IgnoreCollision(m_MainCollider, m_TransferableObject.GetComponent<Collider>(), false);
-            UnityEngine.Physics.IgnoreCollision(m_MainCollider, m_InteractCollider, false);
+            UnityEngine.Physics.IgnoreCollision(otherCollider, m_InteractCollider, false);
             transferableRigidbody.useGravity = true;
             m_TransferableObject = null;
         }
@@ -345,6 +351,7 @@ namespace Unity.Multiplayer.Samples.SocialHub.Player
         {
             var transferableObjectRigidbody = m_TransferableObject.GetComponent<Rigidbody>();
             UnityEngine.Physics.IgnoreCollision(m_MainCollider, m_TransferableObject.GetComponent<Collider>(), false);
+            m_InteractCollider.isTrigger = true;
 
             m_AvatarNetworkAnimator.SetTrigger(k_ThrowReleaseId);
             m_PickupLocFixedJoint.connectedBody = null;
@@ -366,9 +373,9 @@ namespace Unity.Multiplayer.Samples.SocialHub.Player
         void OnThrowAction()
         {
             var transferableRigidbody = m_TransferableObject.GetComponent<Rigidbody>();
-            m_InteractCollider.isTrigger = false;
-            UnityEngine.Physics.IgnoreCollision(m_MainCollider, m_TransferableObject.GetComponent<Collider>(), false);
-            UnityEngine.Physics.IgnoreCollision(m_MainCollider, m_InteractCollider, false);
+            var otherCollider = m_TransferableObject.GetComponent<Collider>();
+            UnityEngine.Physics.IgnoreCollision(m_MainCollider, otherCollider, false);
+            UnityEngine.Physics.IgnoreCollision(otherCollider, m_InteractCollider, false);
             transferableRigidbody.useGravity = true;
             m_TransferableObject = null;
         }

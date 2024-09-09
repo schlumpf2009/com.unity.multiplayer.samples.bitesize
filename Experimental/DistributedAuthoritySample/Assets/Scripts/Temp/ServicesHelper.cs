@@ -126,18 +126,18 @@ public class ServicesHelper : MonoBehaviour
 
     public void Join()
     {
-        ConnectThroughLiveService("session");
+        ConnectThroughLiveService(m_SessionName);
     }
 
+    bool m_Confirmed;
     void OnGUI()
     {
-        return;
         if (AuthenticationService.Instance == null || !AuthenticationService.Instance.IsSignedIn)
         {
             return;
         }
 
-        if (!NetworkManager.Singleton.IsClient && !NetworkManager.Singleton.IsServer)
+        if (!m_Confirmed && !NetworkManager.Singleton.IsClient && !NetworkManager.Singleton.IsServer)
         {
             GUI.enabled = m_SessionTask == null || m_SessionTask.IsCompleted;
 
@@ -145,7 +145,8 @@ public class ServicesHelper : MonoBehaviour
             m_SessionName = GUILayout.TextField(m_SessionName);
             if (GUILayout.Button("Connect"))
             {
-                m_SessionTask = ConnectThroughLiveService(m_SessionName);
+                m_Confirmed = true;
+                //m_SessionTask = ConnectThroughLiveService(m_SessionName);
             }
 
             GUI.enabled = true;
